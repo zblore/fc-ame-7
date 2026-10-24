@@ -6,7 +6,7 @@ project:
   name: "fc-ame-7"
   description: >-
     A machine-checked proof that an absolutely maximally entangled state of seven parties with
-    local dimension d exists exactly when d >= 3, against the definitions of Formal Conjectures
+    local dimension d >= 2 exists exactly when d >= 3, against the definitions of Formal Conjectures
     Open Quantum Problem 35, following the classification of Shi, Zhang, Zhao and Li (2026).
   authors:
     - "Zayn Blore"

@@ -24,7 +24,7 @@ namespace AME7
 open OpenQuantumProblem35
 open scoped Matrix
 
-/-- `Γ`, the complement of the 7-cycle: `Γ i j = 1` iff `i - j ≢ 0, ±1 (mod 7)`. -/
+/-- `Γ`, the complement of the 7-cycle: for `i, j < 7`, `Γ i j = 1` iff `i - j ≢ 0, ±1 (mod 7)`. -/
 def gammaT (i j : ℕ) : ℤ :=
   if (i + 7 - j) % 7 = 0 ∨ (i + 7 - j) % 7 = 1 ∨ (i + 7 - j) % 7 = 6 then 0 else 1
 
