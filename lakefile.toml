@@ -1,0 +1,15 @@
+name = "ame7"
+version = "0.1.0"
+defaultTargets = ["AME7"]
+
+[leanOptions]
+autoImplicit = false
+weak.linter.mathlibStandardSet = true
+
+[[require]]
+name = "formal_conjectures"
+git = "https://github.com/google-deepmind/formal-conjectures"
+rev = "9833012f66a47cdd3a6f3eca9cb4b84e0f18a003"
+
+[[lean_lib]]
+name = "AME7"
