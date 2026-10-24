@@ -20,3 +20,7 @@ import AME7
 /-- info: 'AME7.existsAME_eight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in
 #print axioms AME7.existsAME_eight
+
+/-- info: 'AME7.existsAME_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms AME7.existsAME_mul

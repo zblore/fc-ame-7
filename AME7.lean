@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
 import AME7.Instances
+import AME7.Product
 
 /-!
 # AME(7, d) exists exactly when d ≥ 3 (work in progress)
@@ -16,5 +17,7 @@ Done so far:
 * `AME7.GraphState`: graph states over `ZMod q` with `k` digits per party, AME when every
   half-cut block is injective, for any number of parties;
 * `AME7.Certificate`: cut certificates for seven parties, checked in natural-number arithmetic;
-* `AME7.Instances`: AME(7, q) for every odd `q` (`existsAME_odd`), AME(7, 4) and AME(7, 8).
+* `AME7.Instances`: AME(7, q) for every odd `q` (`existsAME_odd`), AME(7, 4) and AME(7, 8);
+* `AME7.Product`: the product property, AME(n, d₁) and AME(n, d₂) give AME(n, d₁ d₂)
+  (`existsAME_mul`).
 -/
