@@ -157,7 +157,7 @@ theorem graphState_isNormalized {n : ℕ} (U : Matrix (Coord n k) (Coord n k) (Z
   exact mul_inv_cancel₀ (pow_ne_zero _ hq)
 
 /-- Permuting the parties, as a permutation of coordinates. -/
-def coordPerm (π : Equiv.Perm (Fin n)) : Equiv.Perm (Coord n k) :=
+def coordPerm {n : ℕ} (π : Equiv.Perm (Fin n)) : Equiv.Perm (Coord n k) :=
   Equiv.prodCongr π (Equiv.refl (Fin k))
 
 omit [NeZero q] in
