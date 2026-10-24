@@ -1,0 +1,119 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+
+version: "v0.4"
+
+project:
+  name: "fc-ame-7"
+  description: >-
+    A machine-checked proof that an absolutely maximally entangled state of seven parties with
+    local dimension d exists exactly when d >= 3, against the definitions of Formal Conjectures
+    Open Quantum Problem 35, following the classification of Shi, Zhang, Zhao and Li (2026).
+  authors:
+    - "Zayn Blore"
+  license: "Apache-2.0"
+
+sources:
+  - title: "Complete Existence Classification of Seven-Partite Absolutely Maximally Entangled States"
+    authors:
+      - "Fei Shi"
+      - "Xiande Zhang"
+      - "Qi Zhao"
+      - "Lvzhou Li"
+    id: "https://arxiv.org/abs/2608.01011"
+    type: "preprint"
+    location: "Theorem 1; Eqs. (2)-(6), (7)-(39), Tables I-III"
+    relationship: "formalizes"
+    author_endorsement: "not-contacted"
+
+related_formalizations:
+  - id: "https://github.com/google-deepmind/formal-conjectures/blob/9833012f66a47cdd3a6f3eca9cb4b84e0f18a003/FormalConjectures/OpenQuantumProblems/35.lean"
+    relationship: "builds-on"
+    note: >-
+      Supplies the statement `OpenQuantumProblem35.ame_7_exists_iff` and every definition it
+      uses. This repository depends on Formal Conjectures at that commit and proves the same
+      proposition without using the declaration left as `sorry` there.
+  - id: "https://github.com/zblore/fc-ame-7-2/tree/249375965695a9b84ccacbb3d327eddd29d5e3a7"
+    relationship: "builds-on"
+    note: >-
+      The non-existence of AME(7, 2), `AME72.ame_7_2_not_exists`, used for the necessity of
+      d >= 3. A Lake dependency at that commit.
+
+classification:
+  arxiv:
+    - "quant-ph"
+  msc2020:
+    - "81P40"
+    - "05B15"
+
+automation:
+  methods:
+    - method: "agent"
+      models:
+        - "Claude Opus 5.5"
+      framework: "Claude Code"
+  notes: >-
+    I drafted the Lean with Claude Code. The constructions were checked numerically before any
+    Lean was written. The AME(7, 4) and AME(7, 8) witnesses were found by computer search.
+
+review:
+  status: "author-verified"
+  reviewers:
+    - "Zayn Blore"
+  notes: >-
+    Checks run: the headline theorem has exactly the type of Formal Conjectures'
+    `ame_7_exists_iff` (`audit/Audit.lean`); it uses only propext, Classical.choice and
+    Quot.sound, enforced by `#guard_msgs`; `lake build --wfail` with Mathlib's standard linter
+    set passes.
+
+status:
+  scope: "Full proof of the single Formal Conjectures statement `ame_7_exists_iff`."
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms:
+    - "propext"
+    - "Classical.choice"
+    - "Quot.sound"
+  main_results:
+    - description: "AME(7, d) exists if and only if d >= 3, for d >= 2."
+      declaration: "AME7.ame_7_exists_iff"
+      file: "AME7/FormalTarget.lean"
+      sorry_count: 0
+      axioms:
+        - "propext"
+        - "Classical.choice"
+        - "Quot.sound"
+    - description: "AME(7, 2q) exists for every odd q >= 3 (the coupled construction)."
+      declaration: "AME7.coupled72q_isAME"
+      file: "AME7/TwiceOdd.lean"
+      sorry_count: 0
+      axioms:
+        - "propext"
+        - "Classical.choice"
+        - "Quot.sound"
+
+fidelity:
+  divergences: >-
+    None in the statement, which is Formal Conjectures' own. For local dimensions 2^a m with
+    a >= 2 the proof uses circulant graph states over GF(4) and GF(8), found by search, and the
+    product property, where the paper cites earlier AME(7, 4) states and Reed-Solomon AME(7, 2^a)
+    states. The finite checks (35 cut certificates per family, the Steane code facts, the seven
+    Fano-line vectors) run in the kernel with `decide +kernel` in natural-number and integer
+    arithmetic, never `native_decide`.
+
+alignment:
+  namespaces:
+    - "AME7"
+  statements:
+    - source: "Formal Conjectures, OpenQuantumProblem35.ame_7_exists_iff"
+      lean: "AME7.ame_7_exists_iff"
+      module: "AME7.FormalTarget"
+      status: "proved"
+    - source: "Shi, Zhang, Zhao and Li (2026), Theorem 1"
+      lean: "AME7.ame_7_exists_iff"
+      module: "AME7.FormalTarget"
+      status: "proved"
+
+acknowledgements: >-
+  Thanks to the authors of Lean 4, Mathlib and Formal Conjectures, and to Fei Shi, Xiande Zhang,
+  Qi Zhao and Lvzhou Li for a paper whose explicit constructions and certificates made this
+  possible.
