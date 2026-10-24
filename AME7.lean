@@ -9,14 +9,16 @@ import AME7.Coupled
 import AME7.LinearPhase
 import AME7.Binary
 import AME7.TwiceOdd
+import AME7.FormalTarget
 
 /-!
-# AME(7, d) exists exactly when d ≥ 3 (work in progress)
+# AME(7, d) exists exactly when d ≥ 3
 
-Towards a Lean 4 proof of Formal Conjectures' `OpenQuantumProblem35.ame_7_exists_iff`, the
-classification of Shi, Zhang, Zhao and Li (arXiv:2608.01011, 2026).
+A Lean 4 proof of Formal Conjectures' `OpenQuantumProblem35.ame_7_exists_iff`, the
+classification of Shi, Zhang, Zhao and Li (arXiv:2608.01011, 2026):
+`AME7.ame_7_exists_iff : ExistsAME 7 d ↔ 3 ≤ d` for `d ≥ 2`.
 
-Done so far:
+The files:
 
 * `AME7.GraphState`: graph states over `ZMod q` with `k` digits per party, AME when every
   half-cut block is injective, for any number of parties;
@@ -29,5 +31,6 @@ Done so far:
 * `AME7.LinearPhase`: graph states with a linear phase, their cross reductions, and certificates
   that a cross reduction vanishes;
 * `AME7.Binary`: the Steane logical states and their cross reductions, for every permutation;
-* `AME7.TwiceOdd`: AME(7, 2q) for every odd `q ≥ 3` (`coupled72q_isAME`).
+* `AME7.TwiceOdd`: AME(7, 2q) for every odd `q ≥ 3` (`coupled72q_isAME`);
+* `AME7.FormalTarget`: the headline theorem, with necessity from `zblore/fc-ame-7-2`.
 -/
