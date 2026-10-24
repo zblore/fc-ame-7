@@ -6,6 +6,7 @@ Authors: Zayn Blore
 import AME7.Instances
 import AME7.Product
 import AME7.Coupled
+import AME7.LinearPhase
 
 /-!
 # AME(7, d) exists exactly when d ≥ 3 (work in progress)
@@ -22,5 +23,7 @@ Done so far:
 * `AME7.Product`: the product property, AME(n, d₁) and AME(n, d₂) give AME(n, d₁ d₂)
   (`existsAME_mul`);
 * `AME7.Coupled`: the reduction of a coupled state `(φ₀ ⊗ χ₀ + φ₁ ⊗ χ₁) / √2`, and normalization
-  from a maximally mixed reduction.
+  from a maximally mixed reduction;
+* `AME7.LinearPhase`: graph states with a linear phase, their cross reductions, and certificates
+  that a cross reduction vanishes.
 -/
