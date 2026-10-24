@@ -24,3 +24,7 @@ import AME7
 /-- info: 'AME7.existsAME_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in
 #print axioms AME7.existsAME_mul
+
+/-- info: 'AME7.coupled72q_isAME' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms AME7.coupled72q_isAME

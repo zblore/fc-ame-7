@@ -80,11 +80,16 @@ lemma isUnit_of_odd (hq : Odd q) {d : ℤ} (hd : d = 1 ∨ d = -1 ∨ d = 2) :
   · simp
   · simpa using h2
 
+omit [NeZero q] in
+/-- **Every cut of `Γ` passes over `ZMod q`, for odd `q`.** -/
+theorem odd_cutInj (hq : Odd q) : ∀ A : Finset (Fin 7), A.card = 7 / 2 →
+    CutInj (graphU (q := q) 1 gammaT + (graphU (q := q) 1 gammaT)ᵀ) A :=
+  cutInj_all_of_certs 0 gammaT oddCerts gammaT_symm oddCerts_ok oddCerts_masks (by simp)
+    fun c hc ↦ isUnit_of_odd hq (of_decide_eq_true (List.all_eq_true.mp oddCerts_dets c hc))
+
 /-- **AME(7, q) for every odd `q`**: the graph state of `Γ` over `ZMod q`. -/
 theorem odd_isAME (hq : Odd q) : IsAME (graphState (q := q) (graphU 1 gammaT)) :=
-  graphState_isAME _ (cutInj_all_of_certs 0 gammaT oddCerts gammaT_symm oddCerts_ok
-    oddCerts_masks (by simp) fun c hc ↦ isUnit_of_odd hq
-      (of_decide_eq_true (List.all_eq_true.mp oddCerts_dets c hc)))
+  graphState_isAME _ (odd_cutInj hq)
 
 /-- **AME(7, q) exists for every odd `q`.** -/
 theorem existsAME_odd (hq : Odd q) : ExistsAME 7 q := by

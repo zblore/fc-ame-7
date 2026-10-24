@@ -7,6 +7,8 @@ import AME7.Instances
 import AME7.Product
 import AME7.Coupled
 import AME7.LinearPhase
+import AME7.Binary
+import AME7.TwiceOdd
 
 /-!
 # AME(7, d) exists exactly when d ≥ 3 (work in progress)
@@ -25,5 +27,7 @@ Done so far:
 * `AME7.Coupled`: the reduction of a coupled state `(φ₀ ⊗ χ₀ + φ₁ ⊗ χ₁) / √2`, and normalization
   from a maximally mixed reduction;
 * `AME7.LinearPhase`: graph states with a linear phase, their cross reductions, and certificates
-  that a cross reduction vanishes.
+  that a cross reduction vanishes;
+* `AME7.Binary`: the Steane logical states and their cross reductions, for every permutation;
+* `AME7.TwiceOdd`: AME(7, 2q) for every odd `q ≥ 3` (`coupled72q_isAME`).
 -/
