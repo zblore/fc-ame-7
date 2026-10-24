@@ -6,7 +6,7 @@ A Lean 4 proof that an absolutely maximally entangled state of seven parties wit
 
 A pure state of seven parties, each with d levels, is absolutely maximally entangled, AME(7, d), if any three of the parties on their own look completely random. Fei Shi, Xiande Zhang, Qi Zhao and Lvzhou Li proved that such a state exists if and only if d ≥ 3: "Complete Existence Classification of Seven-Partite Absolutely Maximally Entangled States", arXiv:2608.01011 (2026). Their paper is an unrefereed preprint, and they say that its new construction, for d = 2q with q odd, was developed with the assistance of GPT-5.6 and that they verified it themselves. This proof is an independent check of every case.
 
-As far as I could find, this is the first formal proof. I searched GitHub, the Formal Conjectures pull requests and issues, and the Formal Conjectures benchmark on 24 Oct 2026. The benchmark lists AME(7, 6) and AME(7, 10) as tasks with no solution.
+As far as I could find, this is the first formal proof. I searched GitHub, the Formal Conjectures pull requests and issues, and the Formal Conjectures benchmark on 24 Oct 2026. The benchmark lists AME(7, 6) and AME(7, 10) as tasks with no bundled solution ("oracle_status = none").
 
 ## The proof
 
