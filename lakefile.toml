@@ -11,10 +11,10 @@ name = "formal_conjectures"
 git = "https://github.com/google-deepmind/formal-conjectures"
 rev = "9833012f66a47cdd3a6f3eca9cb4b84e0f18a003"
 
-[[lean_lib]]
-name = "AME7"
-
 [[require]]
 name = "ame72"
 git = "https://github.com/zblore/fc-ame-7-2"
 rev = "249375965695a9b84ccacbb3d327eddd29d5e3a7"
+
+[[lean_lib]]
+name = "AME7"

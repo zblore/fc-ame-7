@@ -25,7 +25,8 @@ open OpenQuantumProblem35
 
 variable {n d₁ d₂ : ℕ}
 
-/-- The cross reduction `(a, b) ↦ ∑_z ψ(a z) ψ̄'(b z)` of two states to the first `m` parties. -/
+/-- The cross reduction `(a, b) ↦ ∑_z ψ(a z) · conj ψ'(b z)` of two states to the first `m`
+parties. -/
 noncomputable def crossRed {d : ℕ} (m : ℕ) (hm : m ≤ n) (ψ ψ' : StateVector n d) :
     Matrix (Config m d) (Config m d) ℂ :=
   fun a b ↦ ∑ z : Config (n - m) d, ψ (combineFirst m hm a z) * star (ψ' (combineFirst m hm b z))

@@ -6,7 +6,7 @@ Authors: Zayn Blore
 import AME7
 
 /-!
-# Axioms of the results so far
+# Axioms of the main intermediate results
 -/
 
 /-- info: 'AME7.existsAME_odd' depends on axioms: [propext, Classical.choice, Quot.sound] -/

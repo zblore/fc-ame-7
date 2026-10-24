@@ -91,7 +91,7 @@ theorem odd_cutInj (hq : Odd q) : ∀ A : Finset (Fin 7), A.card = 7 / 2 →
 theorem odd_isAME (hq : Odd q) : IsAME (graphState (q := q) (graphU 1 gammaT)) :=
   graphState_isAME _ (odd_cutInj hq)
 
-/-- **AME(7, q) exists for every odd `q`.** -/
+/-- **AME(7, q) exists for every odd `q`**, including the degenerate `q = 1`. -/
 theorem existsAME_odd (hq : Odd q) : ExistsAME 7 q := by
   have h : ExistsAME 7 (q ^ 1) := ⟨_, odd_isAME hq⟩
   rwa [pow_one] at h
