@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import AME7.Coupled
-import AME7.GraphState
+module
+
+public import AME7.Coupled
+public import AME7.GraphState
 
 /-!
 # Graph states with a linear phase
@@ -22,6 +24,8 @@ Shi, Zhang, Zhao and Li (2026, Eq. (14)) are of this form.
   vector on the kept coordinates reaches `-(ℓ - ℓ')` through the cut block (`CutAvoid`), which a
   single vector in the kernel of the block certifies (`cutAvoid_of_cert`; their Eqs. (26)–(29)).
 -/
+
+@[expose] public section
 
 namespace AME7
 
@@ -120,7 +124,7 @@ theorem graphStateL_firstHalf {n : ℕ} (U : Matrix (Coord n k) (Coord n k) (ZMo
     have h0 : coeff hm (U + Uᵀ) (toVec a - toVec a) = 0 := by
       funext c
       simp [coeff, lift]
-    rw [hK0 rfl rfl, if_pos h0, if_pos rfl, hexp, pow_add]
+    rw [hK0 rfl rfl, ite_eq_left h0, ite_eq_left rfl, hexp, pow_add]
     push_cast
     rw [← pow_mul, mul_comm k (n / 2)]
     field_simp
@@ -143,7 +147,7 @@ theorem graphStateL_firstHalf {n : ℕ} (U : Matrix (Coord n k) (Coord n k) (ZMo
       have hp := congrFun hw (leftIndex hm p.1, p.2)
       rw [lift_left] at hp
       exact sub_eq_zero.mp hp
-    rw [if_neg hne, if_neg hab]
+    rw [ite_eq_right hne, ite_eq_right hab]
     ring
 
 /-- No vector supported on the coordinates of `A` reaches `-δ` on the coordinates outside `A`
@@ -174,7 +178,7 @@ theorem crossRed_eq_zero_of_cutAvoid {n : ℕ} (U : Matrix (Coord n k) (Coord n 
     have := congrFun hc0 (⟨c.1.1 - n / 2, by omega⟩, c.2)
     simp only [coeffL, coeff, hjk, Pi.zero_apply] at this
     exact hcne this
-  rw [if_neg hne, mul_zero]
+  rw [ite_eq_right hne, mul_zero]
 
 /-- Permuting the parties of a graph state with a linear phase permutes the matrix and the phase. -/
 theorem permuteState_graphStateL {n : ℕ} (π : Equiv.Perm (Fin n))

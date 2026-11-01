@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import AME7.Coupled
-import AME7.Certificate
+module
+
+public import AME7.Coupled
+public import AME7.Certificate
 
 /-!
 # The binary sector: the Steane logical states
@@ -20,6 +22,8 @@ the kernel for every set of three parties, give (their Eqs. (10), (13)):
 * `codeRed_diag`: `R₀₀ + R₁₁ = ¼ · 1`;
 * `codeRed_cross`: `R₀₁ = R₁₀ = 0` unless `S` is a line of the Fano plane.
 -/
+
+@[expose] public section
 
 namespace AME7
 
@@ -92,10 +96,10 @@ lemma sum_place (π : Equiv.Perm (Fin n)) (hm : m ≤ n) (u : Config m d) (z₀ 
       ∑ x, if (∀ i ∈ keptSet π m, x i = place π hm u z₀ i) then f x else 0 := by
   rw [← (placeEquiv π hm).sum_comp, Fintype.sum_prod_type]
   rw [Finset.sum_eq_single u]
-  · exact Finset.sum_congr rfl fun z _ ↦ (if_pos fun i hi ↦ place_on π hm u z z₀ i hi).symm
+  · exact Finset.sum_congr rfl fun z _ ↦ (ite_eq_left fun i hi ↦ place_on π hm u z z₀ i hi).symm
   · intro v _ hv
     refine Finset.sum_eq_zero fun z _ ↦ ?_
-    rw [if_neg]
+    rw [ite_eq_right]
     intro hall
     apply hv
     funext k
@@ -254,7 +258,7 @@ theorem codeRed_cross (π : Equiv.Perm (Fin 7)) (hS : maskOf (keptSet π 3) ∉ 
   ext u v
   rw [codeRed_apply, Matrix.zero_apply]
   refine Finset.sum_eq_zero fun z _ ↦ ?_
-  rw [if_neg]
+  rw [ite_eq_right]
   rintro ⟨hx, hy⟩
   have hagree := place_agree π u v z
   fin_cases s <;> fin_cases t
@@ -316,7 +320,7 @@ theorem codeRed_diag (π : Equiv.Perm (Fin 7)) :
       simp [and_comm]
     rw [hcard]
     norm_num
-  · rw [if_neg huv, mul_zero]
+  · rw [ite_eq_right huv, mul_zero]
     refine Finset.sum_eq_zero fun z _ ↦ ?_
     have hagree := place_agree π u v z
     have key : ∀ s : Fin 2, ¬ (wordMask (place π (by norm_num) u z) ∈ codeMasks s ∧
@@ -324,6 +328,6 @@ theorem codeRed_diag (π : Equiv.Perm (Fin 7)) :
       rintro s ⟨hx, hy⟩
       have hxy := code_same _ hcut s _ hx _ hy hagree
       exact huv (place_injective π (by norm_num) (finFunctionFinEquiv.injective (Fin.ext hxy)))
-    rw [if_neg (key 0), if_neg (key 1), add_zero]
+    rw [ite_eq_right (key 0), ite_eq_right (key 1), add_zero]
 
 end AME7

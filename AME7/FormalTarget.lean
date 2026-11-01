@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import AME7.TwiceOdd
-import AME72
+module
+
+public import AME7.TwiceOdd
+public import AME72
 
 /-!
 # The headline: AME(7, d) exists exactly when d ≥ 3
@@ -20,11 +22,15 @@ The classification of Shi, Zhang, Zhao and Li (arXiv:2608.01011, 2026, Theorem 1
 For `α ≥ 2` the paper uses known AME(7, 4) states and Reed–Solomon AME(7, 2^α) states; this proof
 uses the two circulant witnesses of `AME7.Instances` and the product property instead.
 
-Necessity is the non-existence of AME(7, 2) (Huber, Gühne and Siewert 2017), proved in
-`zblore/fc-ame-7-2` (`AME72.ame_7_2_not_exists`).
+Necessity is the non-existence of AME(7, 2) (Huber, Gühne and Siewert 2017),
+`AME72.ame_7_2_not_exists`, in this repository's `AME72` library.
 
-The statement is Formal Conjectures' own `OpenQuantumProblem35.ame_7_exists_iff`.
+The statement is Formal Conjectures' own `OpenQuantumProblem35.ame_7_exists_iff`. At the end of
+the file both theorems are stated again under Formal Conjectures' names, which are the names
+`Challenge.lean` and Palomar's Comparator check.
 -/
+
+@[expose] public section
 
 namespace AME7
 
@@ -65,3 +71,18 @@ theorem ame_7_exists_iff (d : ℕ) (hd : 2 ≤ d) : ExistsAME 7 d ↔ 3 ≤ d :=
     | j + 2 => exact existsAME_mul (existsAME_two_pow j) (existsAME_odd hm)
 
 end AME7
+
+/-! ### Formal Conjectures' names -/
+
+namespace OpenQuantumProblem35
+
+/-- Formal Conjectures' `ame_7_2_not_exists`: there is no AME(7, 2) state. -/
+theorem ame_7_2_not_exists : ¬ ExistsAME 7 2 :=
+  AME72.ame_7_2_not_exists
+
+/-- Formal Conjectures' `ame_7_exists_iff`: for `d ≥ 2`, AME(7, d) exists exactly when
+`d ≥ 3`. -/
+theorem ame_7_exists_iff (d : ℕ) (hd : 2 ≤ d) : ExistsAME 7 d ↔ 3 ≤ d :=
+  AME7.ame_7_exists_iff d hd
+
+end OpenQuantumProblem35

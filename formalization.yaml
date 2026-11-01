@@ -2,17 +2,49 @@
 
 version: "v0.4"
 
+# Authors and maintainers use the {name, orcid} form that Palomar's submission profile accepts.
+# The upstream v0.4 schema takes plain name strings, so a strict check against it reports those
+# two entries; everything else validates.
+
 project:
-  name: "fc-ame-7"
+  name: "Absolutely maximally entangled states of seven parties: for d >= 2, AME(7, d) exists exactly when d >= 3"
   description: >-
-    A machine-checked proof that an absolutely maximally entangled state of seven parties with
-    local dimension d >= 2 exists exactly when d >= 3, against the definitions of Formal Conjectures
-    Open Quantum Problem 35, following the classification of Shi, Zhang, Zhao and Li (2026).
+    Machine-checked proofs that no absolutely maximally entangled state of seven qubits exists,
+    and that for local dimension d >= 2 an absolutely maximally entangled state of seven parties
+    exists exactly when d >= 3. The statements and definitions are Formal Conjectures' (Open
+    Quantum Problem 35), copied verbatim into Challenge.lean, so this entry proves Formal
+    Conjectures' own statements; one proof step inside the definition combineFirst is changed so
+    that Comparator can match it, and the definition is unchanged. The proofs follow Huber, Gühne
+    and Siewert (2017) and Shi, Zhang, Zhao and Li (2026).
   authors:
-    - "Zayn Blore"
+    - name: "Zayn Blore"
+      orcid: "0009-0009-8447-7247"
   license: "Apache-2.0"
+  responsible_maintainers:
+    - name: "Zayn Blore"
+      orcid: "0009-0009-8447-7247"
 
 sources:
+  - title: "Absolutely maximally entangled states of seven qubits do not exist"
+    authors:
+      - "Felix Huber"
+      - "Otfried Gühne"
+      - "Jens Siewert"
+    id: "https://arxiv.org/abs/1608.06228"
+    type: "paper"
+    location: "Lemma 1 (the parity rule) and Observation 2"
+    relationship: "formalizes"
+    author_endorsement: "not-contacted"
+  - title: "Constraints on correlations in multiqubit systems"
+    authors:
+      - "Nikolai Wyderka"
+      - "Felix Huber"
+      - "Otfried Gühne"
+    id: "https://arxiv.org/abs/1710.00758"
+    type: "paper"
+    location: "The state inversion, eq. (5); its expansion into reductions, eq. (10); eq. (9)"
+    relationship: "adapts"
+    author_endorsement: "not-contacted"
   - title: "Complete Existence Classification of Seven-Partite Absolutely Maximally Entangled States"
     authors:
       - "Fei Shi"
@@ -20,29 +52,38 @@ sources:
       - "Qi Zhao"
       - "Lvzhou Li"
     id: "https://arxiv.org/abs/2608.01011"
-    type: "preprint"
+    type: "paper"
     location: "Theorem 1; Eqs. (2)-(6), (7)-(39), Tables I-III"
     relationship: "formalizes"
     author_endorsement: "not-contacted"
 
 related_formalizations:
-  - id: "https://github.com/google-deepmind/formal-conjectures/blob/9833012f66a47cdd3a6f3eca9cb4b84e0f18a003/FormalConjectures/OpenQuantumProblems/35.lean"
+  - id: "https://github.com/google-deepmind/formal-conjectures/blob/b6939a3a0d89e5f999fa8c6483a6ef646c1e2923/FormalConjectures/OpenQuantumProblems/35.lean"
     relationship: "builds-on"
     note: >-
-      Supplies the statement `OpenQuantumProblem35.ame_7_exists_iff` and every definition it
-      uses. This repository depends on Formal Conjectures at that commit and proves the same
-      proposition without using the declaration left as `sorry` there.
+      Supplies the statements `ame_7_2_not_exists` and `ame_7_exists_iff` and every definition
+      they use. Challenge.lean copies the definitions the statements use, and the two statements,
+      verbatim, with Formal Conjectures' names; AME7/Defs.lean copies the file up to its
+      benchmark statements, with the `category` and `AMS` attributes removed and Mathlib imported
+      in place of Formal Conjectures' own library. In both, one proof step inside combineFirst is
+      `exact Nat.sub_lt_sub_right him i.2` instead of Formal Conjectures' `omega` (see fidelity);
+      audit/Audit.lean keeps Formal Conjectures' original under another name and checks by rfl
+      that the two are equal. scripts/check-fc-match.py checks all of this against Formal
+      Conjectures at that commit. Earlier versions of these proofs depended on Formal
+      Conjectures directly (commit 9833012f) and were linked from Formal Conjectures PRs #7586
+      and #7611.
   - id: "https://github.com/zblore/fc-ame-7-2/tree/249375965695a9b84ccacbb3d327eddd29d5e3a7"
     relationship: "builds-on"
     note: >-
-      The non-existence of AME(7, 2), `AME72.ame_7_2_not_exists`, used for the necessity of
-      d >= 3. A Lake dependency at that commit.
+      The earlier, separate repository of the AME(7, 2) proof. Its Lean files are copied into
+      AME72/ here, with module headers and imports changed and deprecated lemma names replaced.
 
 classification:
   arxiv:
     - "quant-ph"
   msc2020:
     - "81P40"
+    - "81P45"
     - "05B15"
 
 automation:
@@ -52,21 +93,39 @@ automation:
         - "Claude Opus 5.5"
       framework: "Claude Code"
   notes: >-
-    I drafted the Lean with Claude Code. The constructions were checked numerically before any
-    Lean was written. The AME(7, 4) and AME(7, 8) witnesses were found by computer search.
+    I drafted the Lean with Claude Code, and ported it to Lean v4.35.0-rc3 and Palomar's layout
+    with Claude Code. The AME(7, d) constructions were checked numerically before any Lean was
+    written. The AME(7, 4) and AME(7, 8) witnesses were found by computer search.
 
 review:
-  status: "author-verified"
+  status: "agent-reviewed"
   reviewers:
     - "Zayn Blore"
   notes: >-
-    Checks run: the headline theorem has exactly the type of Formal Conjectures'
-    `ame_7_exists_iff` (`audit/Audit.lean`); it uses only propext, Classical.choice and
-    Quot.sound, enforced by `#guard_msgs`; `lake build --wfail` with Mathlib's standard linter
-    set passes.
+    Checked locally (Windows): the build; scripts/check-fc-match.py and its self-test;
+    audit/Audit.lean, which checks that the proofs have exactly the statements' types and derives
+    AME(7, 6) and AME(7, 10); audit/Axioms.lean and audit/Audit.lean, which enforce with
+    `#guard_msgs` that the proofs use only propext, Classical.choice and Quot.sound; and
+    audit/Control.lean. Comparator's own comparison and axiom check (`Lake.Check.compareAt`,
+    `checkAxioms`), run locally on `leanexport` dumps of Challenge and Solution with Comparator's
+    targets, pass. `lake comparator` itself needs Linux, so it runs in CI and in Palomar's own
+    pipeline. An AI-model review of the port (Claude Fable 5.1, 31 October 2026, not published)
+    found that Formal Conjectures' `omega` step in combineFirst made that comparison fail, and
+    found no other problem with the mathematics or the port; the step was changed as described
+    under fidelity. A second review of the port (OpenAI Astra, 1 November 2026, not published)
+    stopped at a usage limit before its report; its notes found two gaps in
+    scripts/check-fc-match.py (an extra Formal Conjectures definition, and context before the
+    namespace, were not caught), since closed, and a title that left out d >= 2, since
+    corrected. Before the port, each proof had two AI-model reviews
+    commissioned by the author (OpenAI Astra and Claude Fable 5.1, 23 and 24 October 2026), not
+    published, which found no soundness problem; their fixes are in the earlier versions this
+    port keeps.
 
 status:
-  scope: "Full proof of the single Formal Conjectures statement `ame_7_exists_iff`."
+  scope: >-
+    Full proofs of two Formal Conjectures statements: no AME(7, 2) state exists (proved twice,
+    by two routes), and for d >= 2 an AME(7, d) state exists exactly when d >= 3. Apart from the
+    two placeholders in Challenge.lean there is no sorry.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms:
@@ -74,9 +133,41 @@ status:
     - "Classical.choice"
     - "Quot.sound"
   main_results:
-    - description: "AME(7, d) exists if and only if d >= 3, for d >= 2."
-      declaration: "AME7.ame_7_exists_iff"
+    - description: "No AME(7, 2) state exists. The name Palomar checks."
+      declaration: "OpenQuantumProblem35.ame_7_2_not_exists"
       file: "AME7/FormalTarget.lean"
+      sorry_count: 0
+      axioms:
+        - "propext"
+        - "Classical.choice"
+        - "Quot.sound"
+    - description: "AME(7, d) exists if and only if d >= 3, for d >= 2. The name Palomar checks."
+      declaration: "OpenQuantumProblem35.ame_7_exists_iff"
+      file: "AME7/FormalTarget.lean"
+      sorry_count: 0
+      axioms:
+        - "propext"
+        - "Classical.choice"
+        - "Quot.sound"
+    - description: "No AME(7, 2) state exists (by the state inversion)."
+      declaration: "AME72.ame_7_2_not_exists"
+      file: "AME72/FormalTarget.lean"
+      sorry_count: 0
+      axioms:
+        - "propext"
+        - "Classical.choice"
+        - "Quot.sound"
+    - description: "No AME(7, 2) state exists (by Pauli strings and the parity rule)."
+      declaration: "AME72.PauliRoute.ame_7_2_not_exists"
+      file: "AME72/PauliRoute.lean"
+      sorry_count: 0
+      axioms:
+        - "propext"
+        - "Classical.choice"
+        - "Quot.sound"
+    - description: "The parity rule for Pauli strings on any number of qubits."
+      declaration: "AME72.parity_rule"
+      file: "AME72/Pauli.lean"
       sorry_count: 0
       axioms:
         - "propext"
@@ -93,20 +184,46 @@ status:
 
 fidelity:
   divergences: >-
-    None in the statement, which is Formal Conjectures' own. For local dimensions 2^a m with
-    a >= 2 the proof uses circulant graph states over GF(4) and GF(8), found by search, and the
-    product property, where the paper cites earlier AME(7, 4) states and Reed-Solomon AME(7, 2^a)
-    states. The finite checks (35 cut certificates per family, the Steane code facts, the seven
-    Fano-line vectors) run in the kernel with `decide +kernel` in natural-number and integer
-    arithmetic, never `native_decide`.
+    None in the statements, which are Formal Conjectures' own, copied verbatim. One proof step in
+    the definition combineFirst differs: Formal Conjectures proves `i.1 - m < n - m` by `omega`,
+    which under Lean's module system leaves a private auxiliary lemma named after the module, so
+    the copies in Challenge and AME7.Defs could never compare equal in Comparator; both use
+    `exact Nat.sub_lt_sub_right him i.2`. The proposition proved is the same, so the definition is
+    the same, and audit/Audit.lean checks it against Formal Conjectures' original by rfl. For
+    AME(7, 2) the
+    proofs use the real Pauli basis 1, X, Z, XZ (XZ = -iY) in place of 1, X, Y, Z; the weights,
+    and so the even and odd parts, are the same. Reduced states on an arbitrary set of qubits are
+    defined here (`AME72.red`) and connected to Formal Conjectures' `reducedDensityFirst` by
+    `AME72.red_eq_reducedDensityFirst`. For local dimensions 2^a m with a >= 2 the proof uses
+    circulant graph states over GF(4) and GF(8), found by search, and the product property, where
+    Shi, Zhang, Zhao and Li cite earlier AME(7, 4) states and Reed-Solomon AME(7, 2^a) states.
+    The finite checks (35 cut certificates per family, the Steane code facts, the seven Fano-line
+    vectors) run in the kernel with `decide +kernel` in natural-number and integer arithmetic,
+    never `native_decide`.
 
 alignment:
   namespaces:
+    - "OpenQuantumProblem35"
+    - "AME72"
     - "AME7"
   statements:
-    - source: "Formal Conjectures, OpenQuantumProblem35.ame_7_exists_iff"
-      lean: "AME7.ame_7_exists_iff"
+    - source: "Formal Conjectures, OpenQuantumProblem35.ame_7_2_not_exists"
+      lean: "OpenQuantumProblem35.ame_7_2_not_exists"
       module: "AME7.FormalTarget"
+      status: "proved"
+      note: "Formal Conjectures' own name, checked by Comparator."
+    - source: "Formal Conjectures, OpenQuantumProblem35.ame_7_exists_iff"
+      lean: "OpenQuantumProblem35.ame_7_exists_iff"
+      module: "AME7.FormalTarget"
+      status: "proved"
+      note: "Formal Conjectures' own name, checked by Comparator."
+    - source: "Huber, Gühne and Siewert (2017), Observation 2"
+      lean: "AME72.ame_7_2_not_exists"
+      module: "AME72.FormalTarget"
+      status: "proved"
+    - source: "Huber, Gühne and Siewert (2017), Lemma 1"
+      lean: "AME72.parity_rule"
+      module: "AME72.Pauli"
       status: "proved"
     - source: "Shi, Zhang, Zhao and Li (2026), Theorem 1"
       lean: "AME7.ame_7_exists_iff"

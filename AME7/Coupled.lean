@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import AME7.Product
+module
+
+public import AME7.Product
 
 /-!
 # Coupled states `(φ₀ ⊗ χ₀ + φ₁ ⊗ χ₁) / √2`
@@ -18,6 +20,8 @@ Li (2026, Eq. (31)).
 * `isNormalized_of_maxMixed`: a state with a maximally mixed reduction is normalized, so the
   normalization of a coupled state need not be checked separately.
 -/
+
+@[expose] public section
 
 namespace AME7
 
@@ -109,7 +113,7 @@ theorem isNormalized_of_maxMixed {d m : ℕ} [NeZero d] (hm : m ≤ n) {ψ : Sta
     rfl
   have hval : ∑ a, reducedDensityFirst m hm ψ a a = 1 := by
     rw [h]
-    simp only [maximallyMixed_apply, card_config, if_true, Finset.sum_const, Finset.card_univ,
+    simp only [maximallyMixed_apply, card_config, ite_true, Finset.sum_const, Finset.card_univ,
       nsmul_eq_mul]
     push_cast
     exact mul_inv_cancel₀ hd

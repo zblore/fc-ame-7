@@ -1,20 +1,29 @@
 name = "ame7"
 version = "0.1.0"
-defaultTargets = ["AME7"]
+defaultTargets = ["AME7", "AME72", "Challenge", "Solution"]
 
 [leanOptions]
 autoImplicit = false
 weak.linter.mathlibStandardSet = true
+# The files copied from Formal Conjectures keep its Apache 2.0 header, which is not in
+# Mathlib's header format.
+weak.linter.style.header = false
 
 [[require]]
-name = "formal_conjectures"
-git = "https://github.com/google-deepmind/formal-conjectures"
-rev = "9833012f66a47cdd3a6f3eca9cb4b84e0f18a003"
-
-[[require]]
-name = "ame72"
-git = "https://github.com/zblore/fc-ame-7-2"
-rev = "249375965695a9b84ccacbb3d327eddd29d5e3a7"
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "5e0c4e5239cb0a2d86d68a884bf52cfd963fce22"
 
 [[lean_lib]]
 name = "AME7"
+
+[[lean_lib]]
+name = "AME72"
+
+[[lean_lib]]
+name = "Challenge"
+roots = ["Challenge"]
+
+[[lean_lib]]
+name = "Solution"
+roots = ["Solution"]

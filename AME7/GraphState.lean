@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import FormalConjectures.OpenQuantumProblems.«35»
+module
+
+public import AME7.Defs
 
 /-!
 # Qudit graph states over `ZMod q`, with several coordinates per party
@@ -22,6 +24,8 @@ and the rest (`CutInj`). So the state is AME when that holds for every set of `n
 With `k = 1` this is the usual qudit graph state over `ZMod q`. With `q = 2` and `k > 1` it covers
 graph states over `GF(2^k)`, written in a basis of `GF(2^k)` over `GF(2)`.
 -/
+
+@[expose] public section
 
 namespace AME7
 
@@ -106,7 +110,7 @@ lemma sum_χ_dot {ι : Type*} [Fintype ι] [DecidableEq ι] (e : ι → ZMod q) 
   split_ifs with he
   · simp [he]
   · obtain ⟨j, hj⟩ := Function.ne_iff.mp he
-    exact Finset.prod_eq_zero (Finset.mem_univ j) (if_neg hj)
+    exact Finset.prod_eq_zero (Finset.mem_univ j) (ite_eq_right hj)
 
 omit [NeZero q] in
 /-- `xᵀ U x` at `y + w`, expanded: the cross terms are `∑ j, (∑ i, w i · S i j) · y j` with
@@ -305,7 +309,7 @@ theorem graphState_firstHalf {n : ℕ} (U : Matrix (Coord n k) (Coord n k) (ZMod
     have h0 : coeff hm (U + Uᵀ) (toVec a - toVec a) = 0 := by
       funext c
       simp [coeff, lift]
-    rw [hK0 rfl, if_pos h0, if_pos rfl, hexp, pow_add]
+    rw [hK0 rfl, ite_eq_left h0, ite_eq_left rfl, hexp, pow_add]
     push_cast
     rw [← pow_mul, mul_comm k (n / 2)]
     field_simp
@@ -328,7 +332,7 @@ theorem graphState_firstHalf {n : ℕ} (U : Matrix (Coord n k) (Coord n k) (ZMod
       have hp := congrFun hw (leftIndex hm p.1, p.2)
       rw [lift_left] at hp
       exact sub_eq_zero.mp hp
-    rw [if_neg hne, if_neg hab]
+    rw [ite_eq_right hne, ite_eq_right hab]
     ring
 
 /-- **A graph state over `ZMod q` is AME** when, for every set `A` of `n / 2` parties, the block

@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import AME7.Instances
-import AME7.LinearPhase
-import AME7.Binary
+module
+
+public import AME7.Instances
+public import AME7.LinearPhase
+public import AME7.Binary
 
 /-!
 # AME(7, 2q) for every odd `q ≥ 3`
@@ -24,6 +26,8 @@ For every permutation, the reduction to the first three parties is `½ ∑_{s,t}
   kernel vectors `h_t` of their Table II (`fanoCerts`, `crossRed_eq_zero_of_cutAvoid`). So the
   cross terms vanish for every cut (their Eqs. (36)–(37)).
 -/
+
+@[expose] public section
 
 namespace AME7
 

@@ -3,13 +3,15 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import AME7.Instances
-import AME7.Product
-import AME7.Coupled
-import AME7.LinearPhase
-import AME7.Binary
-import AME7.TwiceOdd
-import AME7.FormalTarget
+module
+
+public import AME7.Instances
+public import AME7.Product
+public import AME7.Coupled
+public import AME7.LinearPhase
+public import AME7.Binary
+public import AME7.TwiceOdd
+public import AME7.FormalTarget
 
 /-!
 # AME(7, d) exists exactly when d ≥ 3
@@ -20,6 +22,7 @@ classification of Shi, Zhang, Zhao and Li (arXiv:2608.01011, 2026):
 
 The files:
 
+* `AME7.Defs`: Formal Conjectures' definitions and lemmas for Open Quantum Problem 35, copied;
 * `AME7.GraphState`: graph states over `ZMod q` with `k` digits per party, AME when every
   half-cut block is injective, for any number of parties;
 * `AME7.Certificate`: cut certificates for seven parties, checked in natural-number arithmetic;
@@ -32,5 +35,6 @@ The files:
   that a cross reduction vanishes;
 * `AME7.Binary`: the Steane logical states and their cross reductions, for every permutation;
 * `AME7.TwiceOdd`: AME(7, 2q) for every odd `q ≥ 3` (`coupled72q_isAME`);
-* `AME7.FormalTarget`: the headline theorem, with necessity from `zblore/fc-ame-7-2`.
+* `AME7.FormalTarget`: the headline theorem, with necessity from the `AME72` library (no
+  AME(7, 2) state), and both theorems under Formal Conjectures' names.
 -/

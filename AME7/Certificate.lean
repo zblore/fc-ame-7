@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import AME7.GraphState
-import AME7.Data
+module
+
+public import AME7.GraphState
+public import AME7.Data
 
 /-!
 # Cut certificates for seven parties, checked in natural-number arithmetic
@@ -20,6 +22,8 @@ The kernel checks every certificate in natural-number and integer arithmetic (`c
 there is one for every set of three parties (`popcount7`). `cutInj_all_of_certs` turns those
 checks into the cut condition for every set of three parties, for any `q`.
 -/
+
+@[expose] public section
 
 namespace AME7
 
@@ -202,6 +206,7 @@ theorem cutInj_all_of_certs (p : ℕ) (T : ℕ → ℕ → ℤ) (certs : List (�
   · have hb : inCut k c.1 (idx j) = false := by
       rw [hcm]
       exact Bool.eq_false_iff.mpr (mt (inCut_maskOf A j).mp hj)
-    rw [if_neg hj, hb, if_neg Bool.false_ne_true, graphU_add T hT i j fun h ↦ hj (h ▸ hi)]
+    rw [ite_eq_right hj, hb, ite_eq_right Bool.false_ne_true,
+      graphU_add T hT i j fun h ↦ hj (h ▸ hi)]
 
 end AME7

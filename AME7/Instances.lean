@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import AME7.Certificate
+module
+
+public import AME7.Certificate
 
 /-!
 # AME(7, q) for every odd `q`, AME(7, 4) and AME(7, 8)
@@ -18,6 +20,8 @@ certificate for every set of three parties (`AME7.Certificate`):
   digits over `ZMod 2`), with inverses modulo `2`. These two witnesses were found for this project
   by computer search.
 -/
+
+@[expose] public section
 
 namespace AME7
 

@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import FormalConjectures.OpenQuantumProblems.«35»
+module
+
+public import AME7.Defs
 
 /-!
 # The product of two AME states is AME
@@ -15,6 +17,8 @@ Its reduction to the first `m` parties is the product of the two reductions
 (`reduced_prodState`), so it is AME when both factors are (`prodState_isAME`). This is the product
 property of AME states (Rains 1999; Shi, Li, Chen and Zhang, PRA 104, 032601 (2021)).
 -/
+
+@[expose] public section
 
 namespace AME7
 
