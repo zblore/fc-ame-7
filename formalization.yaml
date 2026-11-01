@@ -116,7 +116,9 @@ review:
     stopped at a usage limit before its report; its notes found two gaps in
     scripts/check-fc-match.py (an extra Formal Conjectures definition, and context before the
     namespace, were not caught), since closed, and a title that left out d >= 2, since
-    corrected. Before the port, each proof had two AI-model reviews
+    corrected. Its review of the AME(12,5) port, which shares the checker, found a third gap
+    (a context command behind a modifier, such as `public notation`, was not caught), also
+    closed. Before the port, each proof had two AI-model reviews
     commissioned by the author (OpenAI Astra and Claude Fable 5.1, 23 and 24 October 2026), not
     published, which found no soundness problem; their fixes are in the earlier versions this
     port keeps.

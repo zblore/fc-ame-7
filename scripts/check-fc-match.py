@@ -119,7 +119,15 @@ def check_fc_context(fc):
     # `open` line before the namespace is checked above and dropped here.
     region = fc[:fc.index(f"\ntheorem {THEOREMS[-1]} ")]
     region = region.replace("\nopen scoped BigOperators\n", "\n", 1)
-    bad = re.findall(r"^\s*(variable|universe|omit|include|open|section|set_option (?!linter\.)|"
+    # The module system's one `@[expose] public section` makes definitions visible and does
+    # not change how the statements elaborate; exactly one is allowed, and dropped here.
+    if region.count("\n@[expose] public section\n") != 1:
+        raise ValueError("FC: expected exactly one `@[expose] public section`")
+    region = region.replace("\n@[expose] public section\n", "\n", 1)
+    # A context command may sit behind attributes or modifiers (`@[simp] public notation ...`).
+    bad = re.findall(r"^\s*(?:@\[[^\]]*\]\s*)?(?:(?:public|private|protected|noncomputable|"
+                     r"unsafe|partial)\s+)*"
+                     r"(variable|universe|omit|include|open|section|set_option (?!linter\.)|"
                      r"notation|infix|prefix|postfix|macro|macro_rules|syntax|elab|local|scoped|"
                      r"attribute|namespace (?!" + NAMESPACE + r"\b)).*",
                      region, re.M)
@@ -312,6 +320,10 @@ def fc_context_mutations(fc):
         ns, "\nnotation \"‖\" x \"‖\" => x\n" + ns, 1)
     yield "FC set_option before the namespace", fc.replace(
         ns, "\nset_option autoImplicit true\n" + ns, 1)
+    yield "FC public notation before the namespace", fc.replace(
+        ns, "\npublic notation \"‖\" x \"‖\" => x\n" + ns, 1)
+    yield "FC attributed macro before the namespace", fc.replace(
+        ns, "\n@[inherit_doc] private macro \"zz\" : term => `(0)\n" + ns, 1)
 
 
 def main():
